@@ -19,14 +19,14 @@ namespace Calculator
 
         void Calculate()
         {
-            string[] Instructions = OrganiseInput(OutputBox.Text);
+            string[] Instructions = OrganiseInput(OutputBox.Text); //organises the input string so that is can be calcuated
             
         }
         string[] OrganiseInput(string Input)
         {
             //Spliting the string based on BIDMAS
-            char[] DefiningChars = 
-            string[] SplitString = Input.Split();
+            char[] DefiningChars = new char[2]; DefiningChars[0] = '('; DefiningChars[1] = ')';
+            string[] SplitString = Input.Split(DefiningChars); //spliting the whole string into smaller ones based on the brackets
             return "Not finished yet";
         }
 
@@ -59,14 +59,14 @@ namespace Calculator
             }
             for (int i = 0; i < OutputBox.Text.Length; i++)
             {
-                if (SplitString[i] == ')')
+                if (SplitString[i] == ')') //calcualting the acctual ammount of right brackets incase there is a right on its own
                 {
                     RightCheck++;
                 }
             }
-            if (LeftBrak != RightBrak || RightCheck != RightBrak)
+            if (LeftBrak != RightBrak || RightCheck != RightBrak) //checks to see if the backet totals are equal and to see if there are no spare right brackets
             {
-                MessageBox.Show("Incorrect anount of brackets", "Error");
+                MessageBox.Show("Incorrect anount of brackets", "Error"); //shows the user an error box if the brackets aren't right
                 return false;
             }
             return true;
