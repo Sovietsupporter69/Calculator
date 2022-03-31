@@ -19,31 +19,45 @@ namespace Calculator
 
         void Calculate()
         {
+            string[] Instructions = OrganiseInput(OutputBox.Text);
             
+        }
+        string[] OrganiseInput(string Input)
+        {
+            //Spliting the string based on BIDMAS
+            char[] DefiningChars = 
+            string[] SplitString = Input.Split();
+            return "Not finished yet";
         }
 
         bool Verify()
         {
-            char[] SplitString = OutputBox.Text.ToCharArray();
+            char[] Hold = OutputBox.Text.ToCharArray(); //spliting the string into an array of characters so its easier to search through
+            List<char> SplitString = new List<char>();
+            for (int f = 0; f < Hold.Length; f++) //converting the array to a list for removal of elements later
+            {
+                SplitString[f] = Hold[f];
+            }
             int LeftBrak = 0;
             int RightBrak = 0;
             int RightCheck = 0;
-            for (int i = (OutputBox.Text.Length-1); i > 0; i--)
+            for (int i = (SplitString.Count - 1); i > 0; i--)
             {
-                if (SplitString[i] == '(')
+                if (SplitString[i] == '(') //searching, in reverse order, through the array list for a left bracket
                 {
                     LeftBrak++;
-                    for (int x = i; x < OutputBox.Text.Length; x++)
+                    for (int x = i; x < SplitString.Count; x++)
                     {
-                        if (SplitString[x] == ')')
+                        if (SplitString[x] == ')') //searching, in normal order, from the location of the found left bracket, to find a corresponding right bracket
                         {
                             RightBrak++;
+                            SplitString.RemoveAt(x); //removing the bracket so it doesn't get found again
                             break;
                         }
                     }
                 }
             }
-            for (int i = 0; 1 < OutputBox.Text.Length; 1++)
+            for (int i = 0; i < OutputBox.Text.Length; i++)
             {
                 if (SplitString[i] == ')')
                 {
