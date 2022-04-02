@@ -17,17 +17,39 @@ namespace Calculator
             InitializeComponent();
         }
 
-        void Calculate()
+        void Calcualte()
         {
-            string[] Instructions = OrganiseInput(OutputBox.Text); //organises the input string so that is can be calcuated
-            
-        }
-        string[] OrganiseInput(string Input)
-        {
-            //Spliting the string based on BIDMAS
-            char[] DefiningChars = new char[2]; DefiningChars[0] = '('; DefiningChars[1] = ')';
-            string[] SplitString = Input.Split(DefiningChars); //spliting the whole string into smaller ones based on the brackets
-            return "Not finished yet";
+            String Input = OutputBox.Text; //Changeing the input into an array of strings in the calculation order
+            char[] SplitInput = Input.ToCharArray(); //split the string into individual characters
+            int Priority = 0;
+            int[] Hold = new int[SplitInput.Length];
+            List<string> CalcOrder = new List<string>();
+            for (int i = 0; i < SplitInput.Length; i++)
+            {
+                if (SplitInput[i] == '(') //searches the character array for a left bracket
+                {
+                    Priority++; //Makes the priority higher
+                    Hold[i] = Priority; //and asigns that to the bracket in the hold array
+                }
+                else if (SplitInput[i] == ')') //then once it finds the corresponding right bracket
+                {
+                    for (int x = (Hold.Length-1); x >= 0; x++) 
+                    {
+                        if (Hold[x] == Priority) //it searches backwards in the priority list
+                        {
+                            string temp = "";
+                            for (int y = (x+1); y < i; y++) //and grabs the length of characters that fit the priority
+                            {
+                                temp = temp + SplitInput[y]; //turns them back into a string
+                                SplitInput[y] = '$';
+                            }
+                            CalcOrder.Append(temp); //and saves them to a list
+                            SplitInput[x] = "NEED TO FIND A GOOD WAY TO MAKE A PLACEHOLDER"; //it also asigns a placeholder so that the answer can be used later
+                            SplitInput[i] = '$';
+                        }
+                    }
+                }
+            }
         }
 
         bool Verify()
@@ -36,12 +58,12 @@ namespace Calculator
             List<char> SplitString = new List<char>();
             for (int f = 0; f < Hold.Length; f++) //converting the array to a list for removal of elements later
             {
-                SplitString[f] = Hold[f];
+                SplitString.Append(Hold[f]);
             }
             int LeftBrak = 0;
             int RightBrak = 0;
             int RightCheck = 0;
-            for (int i = (SplitString.Count - 1); i > 0; i--)
+            for (int i = (SplitString.Count - 1); i >= 0; i--)
             {
                 if (SplitString[i] == '(') //searching, in reverse order, through the array list for a left bracket
                 {
@@ -57,7 +79,7 @@ namespace Calculator
                     }
                 }
             }
-            for (int i = 0; i < OutputBox.Text.Length; i++)
+            for (int i = 0; i < SplitString.Count; i++)
             {
                 if (SplitString[i] == ')') //calcualting the acctual ammount of right brackets incase there is a right on its own
                 {
