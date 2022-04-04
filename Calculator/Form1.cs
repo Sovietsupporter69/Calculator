@@ -14,7 +14,7 @@ namespace Calculator
     {
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent(); //USE Sin(41+(9*Log(72)*(62-(6/871))) AS A TEST
         }
 
         void Calcualte()
@@ -22,6 +22,8 @@ namespace Calculator
             String Input = OutputBox.Text; //Changeing the input into an array of strings in the calculation order
             char[] SplitInput = Input.ToCharArray(); //split the string into individual characters
             int Priority = 0;
+            int Sum = 0;
+            string Holder = "";
             int[] Hold = new int[SplitInput.Length];
             List<string> CalcOrder = new List<string>();
             for (int i = 0; i < SplitInput.Length; i++)
@@ -43,9 +45,47 @@ namespace Calculator
                                 temp = temp + SplitInput[y]; //turns them back into a string
                                 SplitInput[y] = '$';
                             }
-                            CalcOrder.Append(temp); //and saves them to a list
-                            SplitInput[x] = "NEED TO FIND A GOOD WAY TO MAKE A PLACEHOLDER"; //it also asigns a placeholder so that the answer can be used later
-                            SplitInput[i] = '$';
+                            int RunCount = int.Parse(Sum/26); //Sets the amount of Letter grabs so that every placeholder will have a unique link
+                            Sum = Sum%26 //getting the number needed to find the letter for link
+                            for (int d = 0; d < RunCount; d++) //Finds as many numbers as RunCount sets
+                            {
+                                switch (Sum) //getting the correct link
+                                {
+                                    case 1: Holder++"A";
+                                    case 2: Holder++"B";
+                                    case 3: Holder++"C";
+                                    case 4: Holder++"D";
+                                    case 5: Holder++"E";
+                                    case 6: Holder++"F";
+                                    case 7: Holder++"G";
+                                    case 8: Holder++"H";
+                                    case 9: Holder++"I";
+                                    case 10: Holder++"J";
+                                    case 11: Holder++"K";
+                                    case 12: Holder++"L";
+                                    case 13: Holder++"M";
+                                    case 14: Holder++"N";
+                                    case 15: Holder++"O";
+                                    case 16: Holder++"P";
+                                    case 17: Holder++"Q";
+                                    case 18: Holder++"R";
+                                    case 19: Holder++"S";
+                                    case 20: Holder++"T";
+                                    case 21: Holder++"U";
+                                    case 22: Holder++"V";
+                                    case 23: Holder++"W";
+                                    case 24: Holder++"X";
+                                    case 25: Holder++"Y";
+                                    case 26: Holder++"Z";
+                                }
+                            }
+                            CalcOrder.Append(temp); //adds the placeholder to the output string so it can be used later
+                            SplitInput[i] = '$'; //replace the last bracket
+                            for (int d = 0; d < (); d++)
+                            {
+                                SplitInput[x+d] = Holder; //asigns the placeholder to the char array
+                                //does this by asigning the placeholder one letter at a time as the array is char so can only accept one letter
+                            }
                         }
                     }
                 }
